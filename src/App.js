@@ -1,10 +1,16 @@
+import Auth from "./auth";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./pages/home";
+
 function App() {
-  document.title = process.env.REACT_APP_SITE_TITLE
   return (
-    <div className="App">
-      Flipr Hackathon
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/signing" component={Auth} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
-
 export default App;
