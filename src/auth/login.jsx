@@ -1,30 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Col, Row, Form } from "react-bootstrap";
 import { FormControl, GLogin, SubmitBtn, FormTag } from "./styled";
-import { Bred } from "../themes/color"
-import { ApiPostService } from '../api_services'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Bred } from "../themes/color";
+import { ApiPostService } from "../api_services";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
+import OtpModal from "./OtpModal";
+
+let otp;
 
 const Login = ({ toggle }) => {
     let history = useHistory();
+    const [showModal, setShowModal] = useState(false);
 
-    const [data,setData]= useState( 
-        { email:'', password:'' }
-    )
+    const [data, setData] = useState({ email: "", password: "" });
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        setData(prevState => ({
+        setData((prevState) => ({
             ...prevState,
-            [name]: value
+            [name]: value,
         }));
     };
 
-    const login =async()=>{
-
-        if (data.email==='' || data.pass==="") {
+    const login = async () => {
+        if (data.email === "" || data.pass === "") {
             toast.error("All fields are required!", {
                 position: "bottom-center",
                 autoClose: 2500,
@@ -37,7 +38,7 @@ const Login = ({ toggle }) => {
             return;
         }
 
-        if(data.password.length<5){
+        if (data.password.length < 5) {
             toast.error("Invaild Email / Password. Try again", {
                 position: "bottom-center",
                 autoClose: 1500,
@@ -49,12 +50,12 @@ const Login = ({ toggle }) => {
             });
             return;
         }
-        
-        let a=await ApiPostService(process.env.REACT_APP_LOGIN, {
-            "email":data.email,
-            "password":data.password
+
+        let a = await ApiPostService(process.env.REACT_APP_LOGIN, {
+            email: data.email,
+            password: data.password,
         });
-        if(!a.success){
+        if (!a.success) {
             toast.error(a.errors.description, {
                 position: "bottom-center",
                 autoClose: 2500,
@@ -65,22 +66,47 @@ const Login = ({ toggle }) => {
                 progress: undefined,
             });
             console.log(a);
+        } else {
+            console.log(a);
+            localStorage.setItem("isCRLogged", true);
+            localStorage.setItem("access_token", a.tokens.access_token);
+            localStorage.setItem("refresh", a.tokens.refresh);
+            if (!a.is_verified) {
+                otp = a.otp;
+                setShowModal(true);
+            }
+            else{
+                history.replace("/");
+            }
         }
-        else{
-            history.replace("/");
-        }
-        console.log(a);
-    }
+        console.log("man", a.tokens.access_token);
+    };
 
     return (
         <>
             <FormTag onSubmit={() => console.log("done")}>
                 <h1>Login</h1>
                 <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
-                    <FormControl className="px-3" type="email" placeholder=" Enter email" required value={data.email} onChange={handleChange} name='email' />
+                    <FormControl
+                        className="px-3"
+                        type="email"
+                        placeholder=" Enter email"
+                        required
+                        value={data.email}
+                        onChange={handleChange}
+                        name="email"
+                    />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPwd">
-                    <FormControl type="password" placeholder="Enter password" required value={data.password} onChange={handleChange} name="password" autoComplete='off' />
+                    <FormControl
+                        type="password"
+                        placeholder="Enter password"
+                        required
+                        value={data.password}
+                        onChange={handleChange}
+                        name="password"
+                        autoComplete="off"
+                    />
                 </Form.Group>
                 <Row>
                     <Col>
@@ -90,25 +116,32 @@ const Login = ({ toggle }) => {
                             label="Remember Me"
                         />
                     </Col>
-                    <Col>
-                        Forgot Password
-                    </Col>
+                    <Col>Forgot Password</Col>
                 </Row>
-                <SubmitBtn className="form-control mt-4" onClick={login} type="button">Login</SubmitBtn>
-
+                <SubmitBtn
+                    className="form-control mt-4"
+                    onClick={login}
+                    type="button"
+                >
+                    Login
+                </SubmitBtn>
             </FormTag>
 
             <div className="d-flex justify-content-center mt-5">
                 <GLogin
                     className=""
-                    clientId= "658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
                     buttonText="Sign in with"
-                    cookiePolicy={'single_host_origin'}
+                    cookiePolicy={"single_host_origin"}
                 />
             </div>
             <div className="d-flex justify-content-center mt-5">
-                <button style={{ color: Bred, border: 'none', background: 'none' }} onClick={() => toggle(false)}>
-                    <span className="text-muted">Don't have an account ? </span>Sign up
+                <button
+                    style={{ color: Bred, border: "none", background: "none" }}
+                    onClick={() => toggle(false)}
+                >
+                    <span className="text-muted">Don't have an account ? </span>
+                    Sign up
                 </button>
             </div>
             <ToastContainer
@@ -122,7 +155,13 @@ const Login = ({ toggle }) => {
                 draggable
                 pauseOnHover={false}
             />
+            <OtpModal
+                show={showModal}
+                setShow={setShowModal}
+                otp={otp}
+                email={data.email}
+            />
         </>
-    )
-}
+    );
+};
 export default Login;
