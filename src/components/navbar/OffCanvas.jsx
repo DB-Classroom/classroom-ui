@@ -1,4 +1,4 @@
-import { Container, Image } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import { Ul, UserBox, Li, Text, TextLogo } from './styled'
 import { SiGoogleclassroom } from 'react-icons/si'
 import { BiCalendar } from 'react-icons/bi'
