@@ -5,7 +5,7 @@ import { OffCanvas } from './OffCanvas'
 const Navbar = () => {
 
     return (
-        <Header classNameName="fixed-top">
+        <Header>
             <p>DB ClassRoom</p>
             <button className="border-0 bg-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                 <IoMenu size={30} />
