@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { FormControl, GLogin, SubmitBtn, FormTag } from "./styled";
 import { Bred } from "../themes/color"
 import { ApiPostService } from '../api_services';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import OtpModal from './OtpModal';
 
+let otp;
 const Signup = ({ toggle }) => {
 
-    let history = useHistory();
 
     const [data,setData]= useState( 
         { fname:'', lname:'' , email:'' , pass:'' , cnfrmpass:'' }
     )
+    const [showModal, setShowModal] = useState(false)
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -68,7 +69,11 @@ const Signup = ({ toggle }) => {
             console.log(a.errors.errors[0]);
         }
         else{
-            history.replace("/");
+            localStorage.setItem("isCRLogged",true)
+            localStorage.setItem("access_token",a.tokens.access_token)
+            localStorage.setItem("refresh",a.tokens.refresh)
+            otp=a.otp
+            setShowModal(true)
         }
         console.log("A:",a);
     }
@@ -120,6 +125,7 @@ const Signup = ({ toggle }) => {
                 draggable
                 pauseOnHover={false}
             />
+            <OtpModal show={showModal} setShow={setShowModal} otp={otp} email={data.email} />
         </>
     )
 }
