@@ -74,12 +74,21 @@ const Login = ({ toggle }) => {
             if (!a.is_verified) {
                 otp = a.otp;
                 setShowModal(true);
-            }
-            else{
+            } else {
                 history.replace("/");
             }
         }
-        console.log("man", a.tokens.access_token);
+    };
+    const google_login = async (e) => {
+        let op = await ApiPostService(process.env.REACT_APP_GOOGLE_LOGIN, {
+            auth_token: e.tokenId,
+        });
+        if(op.success){
+            localStorage.setItem("isCRLogged", true);
+            localStorage.setItem("access_token", op.tokens.access_token);
+            localStorage.setItem("refresh", op.tokens.refresh);
+            history.replace("/")
+        }
     };
 
     return (
@@ -130,9 +139,10 @@ const Login = ({ toggle }) => {
             <div className="d-flex justify-content-center mt-5">
                 <GLogin
                     className=""
-                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                    buttonText="Sign in with"
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Sign in with Google"
                     cookiePolicy={"single_host_origin"}
+                    onSuccess={google_login}
                 />
             </div>
             <div className="d-flex justify-content-center mt-5">
