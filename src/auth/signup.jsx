@@ -90,6 +90,9 @@ const Signup = ({ toggle }) => {
             });
             console.log(a.errors.errors[0]);
         } else {
+            let name=a.tokens.data.first_name+" "+a.tokens.data.last_name
+            localStorage.setItem("user_name", name)
+            localStorage.setItem("user_email", a.tokens.data.email)
             localStorage.setItem("isCRLogged", true);
             localStorage.setItem("access_token", a.tokens.access_token);
             localStorage.setItem("refresh", a.tokens.refresh);
@@ -104,6 +107,9 @@ const Signup = ({ toggle }) => {
             auth_token: e.tokenId,
         });
         if (op.success) {
+            let name=op.tokens.data.first_name+" "+op.tokens.data.last_name
+            localStorage.setItem("user_name", name)
+            localStorage.setItem("user_email", op.tokens.data.email)
             localStorage.setItem("isCRLogged", true);
             localStorage.setItem("access_token", op.tokens.access_token);
             localStorage.setItem("refresh", op.tokens.refresh);

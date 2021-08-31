@@ -8,7 +8,6 @@ import { ApiGetService } from '../../api/api_services'
 import { useState, useEffect } from 'react'
 
 export const OffCanvas = () => {
-    const [data, setData] = useState({})
     const [teachClass, setTeachClass] = useState([])
     const history = useHistory()
     const [student, setStudent] = useState([])
@@ -30,8 +29,8 @@ export const OffCanvas = () => {
             <div className="offcanvas-body">
                 <UserBox className="border">
                     <Image className="mt-2" fluid src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" alt=".." height="75" width="75" />
-                    <p>user name</p>
-                    <p>user@gmail.com</p>
+                    <p>{localStorage.getItem("user_name")}</p>
+                    <p>{localStorage.getItem("user_email")}</p>
                 </UserBox>
                 <div className="border mt-2">
                     <Ul className="mt-2">

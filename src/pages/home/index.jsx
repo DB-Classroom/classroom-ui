@@ -9,9 +9,6 @@ import JoinClass from "./joinClass";
 import { useHistory } from "react-router-dom";
 import { ApiGetService } from "../../api/api_services";
 
-const images = ["1.jfif", "2.jpg", "3.jfif", "4.jpg"];
-const index = [1, 2, 3, 4, 5, 6, 7, 8];
-
 const Home = () => {
     let history = useHistory();
     if (
@@ -25,11 +22,6 @@ const Home = () => {
     const [teachClass, setTeachClass] = useState([]);
     const [student, setStudent] = useState([]);
 
-    function getImage() {
-        let res = Math.floor(Math.random() * 10 + 1) % 4;
-        let result = "images/" + images[res];
-        return result;
-    }
     useEffect(() => {
         const getData = async () => {
             let teach = await ApiGetService(
@@ -79,8 +71,6 @@ const Home = () => {
                             <CardImg variant="top " src={e.image} alt="..." />
                             <Card.Body className="text-center">
                                 <p>{e.subject_name}</p>
-                                <p>SENTHINAYAGI POINT</p>
-                                <p>21 STUDENTS</p>
                             </Card.Body>
                         </ClassCard>
                     </Col>
@@ -97,8 +87,6 @@ const Home = () => {
                             <CardImg variant="top " src={e.image} alt="..." />
                             <Card.Body className="text-center">
                                 <p>{e.subject_name}</p>
-                                <p>SENTHINAYAGI POINT</p>
-                                <p>21 STUDENTS</p>
                             </Card.Body>
                         </ClassCard>
                     </Col>

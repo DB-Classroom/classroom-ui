@@ -1,5 +1,4 @@
 import axios from "axios";
-import GetRefreshToken from './getRefreshToken'
 
 let Token = process.env.REACT_APP_TOKEN;
 async function ApiPostService(
