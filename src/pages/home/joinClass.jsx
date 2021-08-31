@@ -1,8 +1,26 @@
 import { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap'
+import { ApiPostService } from '../../api/api_services';
 function JoinClass({ show, setShow }) {
     const [code, setCode] = useState('')
     const [detail, setDetail] = useState(false)
+    const [msg, setMsg] = useState("")
+    const join =async(e)=>{
+        let data={
+            "room":code
+        }
+        let res = await ApiPostService(process.env.REACT_APP_JOIN, data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem(
+                    "access_token"
+                )}`,
+            },
+        })
+        console.log(res);
+        if(res.success){
+            setMsg(res.message)
+        }
+    }
     return (
         <Modal
             show={show}
@@ -34,10 +52,11 @@ function JoinClass({ show, setShow }) {
                         <p>21 students</p>
                     </>
                 }
+                {msg}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
                 <span>
-                    <Button variant="warning px-5 mx-2" onClick={() => setShow(false)}>Join</Button>
+                    <Button variant="warning px-5 mx-2" onClick={join}>Join</Button>
                     <Button variant="outline-danger px-5 mx-2" onClick={() => setShow(false)}>Close</Button>
                 </span>
             </Modal.Footer>

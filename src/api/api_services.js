@@ -29,10 +29,10 @@ async function ApiPostService(
             return res.data;
         }
     } catch (error) {
-        if (error.response.status === 401) {
-            GetRefreshToken()
-        }
-        console.log("Catch Error res: ", error.response.status);
+        // if (error?.response?.status === 401) {
+        //     GetRefreshToken()
+        // }
+        console.log("Catch Error res: ", error.response);
         return error.response;
     }
 }
