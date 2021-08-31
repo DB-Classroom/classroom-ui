@@ -83,11 +83,23 @@ const Login = ({ toggle }) => {
         let op = await ApiPostService(process.env.REACT_APP_GOOGLE_LOGIN, {
             auth_token: e.tokenId,
         });
-        if(op.success){
+        if (!op.success) {
+            console.log(op.errors.auth_token[0]);
+            toast.error(op.errors.auth_token[0], {
+                position: "bottom-center",
+                autoClose: 2500,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else{
             localStorage.setItem("isCRLogged", true);
             localStorage.setItem("access_token", op.tokens.access_token);
             localStorage.setItem("refresh", op.tokens.refresh);
-            history.replace("/")
+            history.replace("/");
         }
     };
 
@@ -140,7 +152,7 @@ const Login = ({ toggle }) => {
                 <GLogin
                     className=""
                     clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Sign in with Google"
+                    buttonText="Log in with Google"
                     cookiePolicy={"single_host_origin"}
                     onSuccess={google_login}
                 />
