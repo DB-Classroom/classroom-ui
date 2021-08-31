@@ -3,7 +3,7 @@ let Token = process.env.REACT_APP_TOKEN;
 
 async function GetRefreshToken() {
     let link = process.env.REACT_APP_REFRESH;
-    let data = { 'refresh': localStorage.getItem('access_token') }
+    let data = { 'refresh': localStorage.getItem('refresh') }
     let url = process.env.REACT_APP_API + link;
     let res;
 
@@ -28,13 +28,14 @@ async function GetRefreshToken() {
             return res.data;
         }
     } catch (error) {
-        if (error.response.status === 401) {
-            localStorage.removeItem("isCRLogged")
-            window.alert("Session Closed LOGIN AGAIN...")
-            window.location = '/signing'
-        }
-        console.log("Catch Error res: ", error.response);
-        return error.response;
+        console.log("error:",error.response)
+        // if (error.response.status === 401) {
+        //     localStorage.removeItem("isCRLogged")
+        //     window.alert("Session Closed LOGIN AGAIN...")
+        //     window.location = '/signing'
+        // }
+        // console.log("Catch Error res: ", error.response);
+        return null;
     }
 }
 

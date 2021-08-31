@@ -11,8 +11,17 @@ const fileToDataUri = (file) => new Promise((resolve, reject) => {
 })
 
 function CreateClass({ show, setShow }) {
+    const [msg, setMsg] = useState({"desc":"", "code":""})
     const [sub, setSub] = useState('')
     const [dataUri, setDataUri] = useState('')
+
+    function messages(name, str){
+        setMsg(prevState => ({
+            ...prevState,
+            [name]: str
+         }));
+    }
+
     const onChangeImg = (file) => {
         if (!file) {
             setDataUri('');
@@ -29,13 +38,18 @@ function CreateClass({ show, setShow }) {
             "subject_name": sub,
             "image": dataUri
         }
-        let res = await ApiPostService('/api/classroom/create/', payload, {
+        let res = await ApiPostService(process.env.REACT_APP_CREATE, payload, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem(
                     "access_token"
                 )}`,
             },
         })
+        if(res.success){
+            messages("desc", res.message)
+            messages("code", res.data.code)
+            // setmsg(res.message)
+        }
         console.log(res)
     }
     return (
@@ -58,6 +72,8 @@ function CreateClass({ show, setShow }) {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control type="file" placeholder="Subject Name" accept="image/*" onChange={e => onChangeImg(e.target.files[0]) || null} />
                 </Form.Group>
+                {msg.desc}
+                {msg.code}
             </Modal.Body>
             <Modal.Footer className="justify-content-center">
                 <Button variant="warning  px-5" onClick={() => onSubmit()}>Create</Button>

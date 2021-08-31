@@ -9,12 +9,15 @@ import { useState, useEffect } from 'react'
 
 export const OffCanvas = () => {
     const [data, setData] = useState({})
+    const [teachClass, setTeachClass] = useState([])
     const history = useHistory()
+    const [student, setStudent] = useState([])
     useEffect(() => {
         const getData = async () => {
             let res = await ApiGetService(process.env.REACT_APP_DASHBOARD, true)
-            console.log("dashboard", res)
-            setData(res)
+            let stu = await ApiGetService(process.env.REACT_APP_DASHBOARD, true)
+            setTeachClass(res.data.class_rooms)
+            setStudent(stu.data.subjects)
         }
         getData()
     }, [])
@@ -40,13 +43,15 @@ export const OffCanvas = () => {
                     <Text className="text-muted">Enrolled Classes</Text>
                     <Ul className="mt-2">
                         {
-                            true ?
-                                <Li className="mb-3">
-                                    <TextLogo>M</TextLogo>
-                                    <span className="mx-3">Maths</span>
-                                </Li>
-                                :
+                            student.length===0 ?
                                 <Text>No Enrolled Classes</Text>
+                                :
+                                student.map((e) =>
+                                    <Li className="mb-3">
+                                        <TextLogo>{e.subject_name[0]}</TextLogo>
+                                        <span className="mx-3">{e.subject_name}</span>
+                                    </Li>
+                                )
                         }
                     </Ul>
                 </div>
@@ -54,10 +59,15 @@ export const OffCanvas = () => {
                     <Text className="text-muted">Teaching Classes</Text>
                     <Ul className="mt-2">
                         {
-                            false ?
-                                <Li className="mb-3"><SiGoogleclassroom className="" /><span className="mx-3">Classes</span></Li>
-                                :
-                                <Text>No Teaching Classes</Text>
+                            teachClass.length===0 ?
+                            <Text>No Teaching Classes</Text>
+                            :
+                            teachClass.map((e) =>                                 
+                                <Li className="mb-3">
+                                <TextLogo>{e.subject_name[0]}</TextLogo>
+                                <span className="mx-3">{e.subject_name}</span>
+                                </Li>
+                            )
                         }
                     </Ul>
                 </div>
