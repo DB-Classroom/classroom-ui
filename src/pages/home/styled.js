@@ -17,7 +17,6 @@ export const ClassCard = styled(Card)`
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     font-weight: 600;
     object-fit: contain;
-    
 `;
 export const CardImg = styled(Card.Img)`
     object-fit: cover;

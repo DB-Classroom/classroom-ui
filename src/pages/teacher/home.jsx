@@ -1,22 +1,32 @@
-import { Button, Col, Image, Row } from "react-bootstrap"
-
+import { Button, Col, Form, Row } from "react-bootstrap"
+const sam = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const Home = () => {
     return (
         <>
-            <Image fluid src="images/board1.jpg" alt="." />
-            <div className="d-flex justify-content-end m-2 mt-4">
-                <Button>Post Assignment</Button>
+            <h3>
+                Blockchain Technology
+            </h3>
+            <div>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Invite Students</Form.Label>
+                    <Form.Control className="w-25" type="text" readonly value="12345" />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicEm">
+                    <Form.Label>Subject Name</Form.Label>
+                    <Form.Control className="w-50" type="text" placeholder="Enter student email" />
+                    <Button variant="outline-warning my-2">Invite</Button>
+                </Form.Group>
             </div>
+            <h4>
+                Enrolled Students
+            </h4>
             <Row>
-                <Col xs={12}>Assignment Name</Col>
-                <Col>
-                    <p className="text-muted">Description</p>
-                    <p className="">Write 10 java programs.</p>
-                </Col>
-                <Col>
-                    <p className="text-muted">Last time to submit</p>
-                    <p>31-8-2021</p>
-                </Col>
+                {sam.map(e => (
+                    <Col xs={1} key={e} className="mt-2 p-2 m-2">
+                        <Button variant="outline-dark">Yuvi</Button>
+                    </Col>
+                ))}
             </Row>
         </>
     )

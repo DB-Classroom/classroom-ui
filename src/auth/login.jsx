@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Col, Row, Form } from "react-bootstrap";
 import { FormControl, GLogin, SubmitBtn, FormTag } from "./styled";
 import { Bred } from "../themes/color";
-import { ApiPostService } from "../api_services";
+import { ApiPostService } from "../api/api_services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";

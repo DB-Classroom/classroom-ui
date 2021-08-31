@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Navyblue } from "../themes/color";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { ApiPostService } from "../api_services";
+import { ApiPostService } from "../api/api_services";
 
 // let originalOtp;
 

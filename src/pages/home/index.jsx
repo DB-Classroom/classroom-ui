@@ -6,16 +6,18 @@ import { IoCreateSharp } from 'react-icons/io5'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import CreateClass from "./createClass";
 import JoinClass from "./joinClass";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import GetRefreshToken from "../../api/getRefreshToken";
 
 const images = ['1.jfif', '2.jpg', '3.jfif', '4.jpg'];
 const index = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const Home = () => {
-    // let history=useHistory()
-    // if(localStorage.getItem("isCRLogged")){
-    //     history.push("/signing")
-    // }
+    GetRefreshToken()
+    let history = useHistory()
+    if (!localStorage.getItem("isCRLogged") || localStorage.getItem("isCRLogged") === "false") {
+        history.push("/signing")
+    }
     const [createModal, setCreateModal] = useState(false)
     const [joinModal, setJoinModal] = useState(false)
 
