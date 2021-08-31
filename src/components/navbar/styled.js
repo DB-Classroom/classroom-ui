@@ -28,17 +28,21 @@ export const Ul = styled.ul`
     list-style: none;
     font-size: large;
     font-family:${Lato};
-
-`;
+    
+    `;
 export const Li = styled.li`
     letter-spacing: .5ch;
-`;
+    `;
+export const A = styled.a`
+        text-decoration:none;
+        color:${Navyblue};
+    `;
 
 export const Text = styled.p`
     margin-left: .5em;
     font-size:medium;
     font-family:${Sans};
-`;
+    `;
 export const TextLogo = styled.span`
     border-radius:50%;
     font-family:${Sans};

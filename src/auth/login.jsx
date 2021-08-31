@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Col, Row, Form } from "react-bootstrap";
 import { FormControl, GLogin, SubmitBtn, FormTag } from "./styled";
 import { Bred } from "../themes/color";
-import { ApiPostService } from "../api_services";
+import { ApiPostService } from "../api/api_services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
@@ -83,7 +83,7 @@ const Login = ({ toggle }) => {
         let op = await ApiPostService(process.env.REACT_APP_GOOGLE_LOGIN, {
             auth_token: e.tokenId,
         });
-        if(op.success){
+        if (op.success) {
             localStorage.setItem("isCRLogged", true);
             localStorage.setItem("access_token", op.tokens.access_token);
             localStorage.setItem("refresh", op.tokens.refresh);

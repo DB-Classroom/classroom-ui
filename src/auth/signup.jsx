@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { FormControl, GLogin, SubmitBtn, FormTag } from "./styled";
 import { Bred } from "../themes/color";
-import { ApiPostService } from "../api_services";
+import { ApiPostService } from "../api/api_services";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OtpModal from "./OtpModal";
@@ -47,7 +47,7 @@ const Signup = ({ toggle }) => {
             });
             return;
         }
-        if(data.pass.length<5 || data.pass.length>15){
+        if (data.pass.length < 5 || data.pass.length > 15) {
             toast.error("Password must contain 5-15 digits!", {
                 position: "bottom-center",
                 autoClose: 2500,
@@ -103,7 +103,7 @@ const Signup = ({ toggle }) => {
         let op = await ApiPostService(process.env.REACT_APP_GOOGLE_SIGNIN, {
             auth_token: e.tokenId,
         });
-        if(op.success){
+        if (op.success) {
             localStorage.setItem("isCRLogged", true);
             localStorage.setItem("access_token", op.tokens.access_token);
             localStorage.setItem("refresh", op.tokens.refresh);
